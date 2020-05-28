@@ -36,8 +36,8 @@ __author__ = 'abaker'
 ---   IMPORT MODULES
 ============================================================
 '''
-import PySide.QtGui as QtGui
-import PySide.QtCore as QtCore
+import PySide2.QtGui as QtGui
+import PySide2.QtCore as QtCore
 #import maya.OpenMayaUI as OpenMayaUI
 #from shiboken import wrapInstance
 
@@ -265,16 +265,16 @@ class NodeItem(QtGui.QGraphicsItem):
         selectedAction = menu.exec_(event.screenPos())
 
         if selectedAction == debugConnections:
-            print 'Input'
+            print( 'Input')
             for idx,line in enumerate(self.Input.inLines):
-                print '  Line {0}'.format(idx)
-                print '    pointA: {0}'.format(line.pointA)
-                print '    pointB: {0}'.format(line.pointB)
-            print 'Output'
+                print( '  Line {0}'.format(idx))
+                print( '    pointA: {0}'.format(line.pointA))
+                print( '    pointB: {0}'.format(line.pointB))
+            print('Output')
             for idx,line in enumerate(self.Output.outLines):
-                print '  Line {0}'.format(idx)
-                print '    pointA: {0}'.format(line.pointA)
-                print '    pointB: {0}'.format(line.pointB)
+                print ('  Line {0}'.format(idx))
+                print ('    pointA: {0}'.format(line.pointA))
+                print ('    pointB: {0}'.format(line.pointB))
 
 class NodeView(QtGui.QGraphicsView):
     """

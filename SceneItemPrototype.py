@@ -1,4 +1,6 @@
-from PyQt4 import QtGui, QtCore
+
+from PySide2 import  QtWidgets as QtGui
+from PySide2 import  QtCore ,QtWidgets
 from common import *
 
 
@@ -31,8 +33,8 @@ class Node(QtGui.QGraphicsEllipseItem):
     CORNER=2
     UNION=3
     widthPoint=QtCore.QPoint(2,2)
-    mainBrush= QtGui.QBrush(MAIN_LINE_COLOR, QtCore.Qt.SolidPattern)
-    subBrush = QtGui.QBrush(SUB_LINE_COLOR,QtCore.Qt.SolidPattern)
+    mainBrush= QtExt.QBrush(MAIN_LINE_COLOR, QtCore.Qt.SolidPattern)
+    subBrush = QtExt.QBrush(SUB_LINE_COLOR,QtCore.Qt.SolidPattern)
 
     def __init__(self, lines=[],pos=()):
         self.pos=pos
@@ -44,7 +46,7 @@ class Node(QtGui.QGraphicsEllipseItem):
     def addLine(self,line):
         self.lines.append(line)
         if len(self.lines)>4 :
-            print "ERROR NODE : len == "+str(len(self.lines))
+            print ("ERROR NODE : len == "+str(len(self.lines)))
         self.typeUpdate()
 
     def getType(self):
@@ -64,10 +66,10 @@ class Node(QtGui.QGraphicsEllipseItem):
             self.type_ = self.NONE
 
     def printType(self):
-        if   self.type_ == self.NONE   : print "node type NONE  "
-        elif self.type_ == self.CROSS  : print "node type CROSS "
-        elif self.type_ == self.CORNER : print "node type CORNER"
-        elif self.type_ == self.UNION  : print "node type UNION "
+        if   self.type_ == self.NONE   : print( "node type NONE  ")
+        elif self.type_ == self.CROSS  : print( "node type CROSS ")
+        elif self.type_ == self.CORNER : print( "node type CORNER")
+        elif self.type_ == self.UNION  : print( "node type UNION ")
 
     def removeLine(self,line):
         scene=line.scene()
@@ -207,7 +209,7 @@ class Proto():
         self.hover = False
         self.deltaPos=QtCore.QPointF()
         self.children=[]
-        self.setPen(QtGui.QPen(BLACK_COLOR, 10, QtCore.Qt.SolidLine, QtCore.Qt.SquareCap, QtCore.Qt.BevelJoin))
+        self.setPen(QtExt.QPen(BLACK_COLOR, 10, QtCore.Qt.SolidLine, QtCore.Qt.SquareCap, QtCore.Qt.BevelJoin))
 
     def hoverEnterEvent(self, event):
         self.hover = True
@@ -301,7 +303,7 @@ class SceneLinePrototype(QtGui.QGraphicsLineItem,Proto):
     def paint(self, painter, option, widget):
         lineStyle,space =  (SUB_LINE_STYLE,5) if self.isSelected() else (MAIN_LINE_STYLE,0)
         color = SUB_LINE_COLOR if self.hover else  MAIN_LINE_COLOR
-        pen=QtGui.QPen(color, 0, lineStyle, QtCore.Qt.SquareCap, QtCore.Qt.BevelJoin)
+        pen=QtExt.QPen(color, 0, lineStyle, QtCore.Qt.SquareCap, QtCore.Qt.BevelJoin)
         #pen.setDashPattern([5,space])
         painter.setPen(pen)
         painter.drawLine(self.line())
@@ -471,5 +473,5 @@ class SceneItemPrototype(QtGui.QGraphicsRectItem,Proto):
 
     def paint(self, painter, option, widget):
         color = GREEN_COLOR if self.hover else BLACK_COLOR
-        painter.setPen(QtGui.QPen(color, 2, QtCore.Qt.SolidLine, QtCore.Qt.SquareCap, QtCore.Qt.BevelJoin))
+        painter.setPen(QtExt.QPen(color, 2, QtCore.Qt.SolidLine, QtCore.Qt.SquareCap, QtCore.Qt.BevelJoin))
         painter.drawRect(self.rect())

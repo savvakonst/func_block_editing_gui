@@ -1,6 +1,6 @@
-
-
-from PyQt4 import QtGui, QtCore
+from PySide2 import  QtGui as QtExt
+from PySide2 import  QtWidgets as QtGui
+from PySide2 import  QtCore ,QtWidgets
 from common import *
 
 
@@ -13,11 +13,11 @@ class ScenePrototype(QtGui.QGraphicsScene):
         self.backgroundEnable=False
         QtGui.QGraphicsScene.__init__(self, parent)
 
-    def confBackground(self ,Nx=100 ,Ny=50 ,backgroundPen=QtGui.QPen(BLACK_COLOR ,0)):
+    def confBackground(self ,Nx=100 ,Ny=50 ,backgroundPen=QtExt.QPen(BLACK_COLOR ,0)):
         self.backgroundPen =backgroundPen
-        self.poly=QtGui.QPolygon()
-        for i in xrange(-Nx ,Nx):
-            for j in xrange(-Ny ,Ny):
+        self.poly=QtExt.QPolygon()
+        for i in range(-Nx ,Nx):
+            for j in range(-Ny ,Ny):
                 self.poly.append(QtCore.QPoint( i * self.GRID_SIZE, j * self.GRID_SIZE))
         self.backgroundEnable = True
 

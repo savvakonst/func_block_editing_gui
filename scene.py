@@ -1,12 +1,9 @@
 
 
-from PyQt4 import QtGui, QtCore
+from PySide2 import  QtWidgets as QtGui
+from PySide2 import  QtCore ,QtWidgets
 from SceneItemPrototype import *
 from ScenePrototype import ScenePrototype,MODE
-
-
-
-
 
 
 
@@ -66,12 +63,13 @@ class Scene(ScenePrototype):
             if a.line().isNull():
                 self.removeItem(a)
 
-        lines=filter(lambda x: x.type() == LINE_t, self.items() )
+        lines=[i for i in filter(lambda x: x.type() == LINE_t, self.items() )]
         linesToRemove=[]
         linesToAdd  = []
         res=False
         linesLen=len(lines)
-        for j in (linesLen-1-i for i in xrange(linesLen) ):
+        print ("linesLen" ,linesLen)
+        for j in (linesLen-1-i for i in range(linesLen) ):
             a = lines[j]
             if a.line().isNull():
                 self.removeItem(a)
@@ -101,10 +99,10 @@ class Scene(ScenePrototype):
         return res
 
     def refactoring(self):
-        print "-" * 100 + "start"
+        print( "-" * 100 + "start")
         for i in filter(lambda x: x.type() == NODE_t, self.items()) :
             self.removeItem(i)
-        print "-" * 100 + "nodesDeleted"
+        print( "-" * 100 + "nodesDeleted")
         while self.preRefactoring():
             pass
 
@@ -116,7 +114,7 @@ class Scene(ScenePrototype):
             self.addItem(i)
             i.printType()
 
-        print "-" * 100 + "end"
+        print( "-" * 100 + "end")
 
 
 
@@ -124,15 +122,15 @@ class Scene(ScenePrototype):
 
 
     def removeAllLines(self):
-        print "-" * 100 + "start"
+        print( "-" * 100 + "start")
         #lines = filter(lambda x: (x.type() == LINE_t) or (x.type() == NODE_t) , self.items())
         lines = filter(lambda x: (x.type() == NODE_t), self.items())
         for a in lines:
             self.removeItem(a)
         lines = filter(lambda x: (x.type() == LINE_t), self.items())
         for a in lines:
-            print "line " , a.line()
-        print "-" * 100 + "end"
+            print( "line " , a.line())
+        print( "-" * 100 + "end")
 
     def removeNullLines(self):
         lines = filter(lambda x: x.type() == LINE_t, self.items())
@@ -146,10 +144,10 @@ class Scene(ScenePrototype):
             a.movable=bool
 
     def printAllLines(self):
-        print "-" * 32
+        print( "-" * 32)
         for a in filter(lambda x: x.type() == LINE_t, self.items()):
-            print a.line()
-        print "-" * 32
+            print( a.line())
+        print( "-" * 32)
 
 
     def keyPressEvent(self, QKeyEvent):
@@ -229,7 +227,7 @@ class MyFrame(QtGui.QGraphicsView):
         self.scene_.addItem(item1)
         self.scene_.addItem(item2)
 
-        self.setRenderHint(QtGui.QPainter.Antialiasing)
+        self.setRenderHint(QtExt.QPainter.Antialiasing)
 
 
     def wheelEvent(self, event):

@@ -1,6 +1,7 @@
 
-
-from PyQt4 import QtGui, QtCore
+from PySide2 import  QtGui as QtExt
+from PySide2 import  QtWidgets as QtGui
+from PySide2 import  QtCore ,QtWidgets
 from enum import Enum
 
 def dbg(txt):
@@ -19,10 +20,10 @@ HOEIZONTAL=False
 
 
 BLACK_COLOR=QtCore.Qt.black
-RED_COLOR=QtGui.QColor("#ff0000")
-GREEN_COLOR=QtGui.QColor("#008f00")
-VIOLET_COLOR= QtGui.QColor("#7d0779")
-BLUE_COLOR= QtGui.QColor("#0000eb")
+RED_COLOR=QtExt.QColor("#ff0000")
+GREEN_COLOR=QtExt.QColor("#008f00")
+VIOLET_COLOR= QtExt.QColor("#7d0779")
+BLUE_COLOR= QtExt.QColor("#0000eb")
 
 MAIN_LINE_COLOR=VIOLET_COLOR
 SUB_LINE_COLOR=BLUE_COLOR
