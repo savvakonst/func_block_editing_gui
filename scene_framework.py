@@ -7,28 +7,30 @@ import constants as co
 
 
 class Point():
-    def __init__(self,x=0,y=0):
+    x:int
+    y:int
+    def __init__(self,x : int =0,y : int =0):
         self.x,self.y=int(x),int(y)
 
-    def __add__(self, other):
+    def __add__(self, other : 'Point') -> 'Point':
         x, y = self.x + other.x, self.y + other.y
         return Point(x,y)
 
-    def __sub__(self, other):
+    def __sub__(self, other : 'Point') -> 'Point':
         x, y = self.x - other.x, self.y - other.y
         return Point(x,y)
 
-    def __iadd__(self, other):
+    def __iadd__(self, other : 'Point') -> 'Point':
         self.x += other.x
         self.y += other.y
         return self
 
-    def __isub__(self, other):
+    def __isub__(self, other : 'Point') -> 'Point':
         self.x -= other.x
         self.y -= other.y
         return self
 
-    def __mul__(self, other):
+    def __mul__(self, other) -> 'Point':
         if isinstance(other, int) :
             x, y = self.x * other, self.y * other
             return Point(x, y)
@@ -36,10 +38,11 @@ class Point():
             x, y = self.x * other.x, self.y * other.y
             return Point(x,y)
 
-    def __eq__(self, other):
+    def __eq__(self, other : 'Point') -> bool:
         return (self.x == other.x ),(self.y == other.y)
 
-
+    def __str__(self):
+        return'Point({:d},{:d})'.format(self.x,self.y)
 
 
 class Line():
@@ -54,7 +57,7 @@ class Line():
         else :          raise  Exception("invalid points")
         self.orderPoints()
 
-    def __iadd__(self, other):
+    def __iadd__(self, other : 'Point') -> 'Line':
         if isinstance(other, Point) :
             self.pointL+=other
             self.pointR+=other
@@ -62,8 +65,18 @@ class Line():
             raise Exception("invalid arg");
         return self
 
-    def __eq__(self, other):
+    def __eq__(self, other : 'Line') -> bool:
         return self.orientation==other.orientation
+
+
+    def __contains__(self, point : 'Point') -> bool:
+        if self.orientation == co.HORIZONTAL:
+            if ( self.pointL.x < point.x) and ( point.x < self.pointR.x):
+                return ((self.pointL.y-co.DELTA )< point.y) and ( point.y < (self.pointL.y+co.DELTA ))
+        elif self.orientation == co.VERTICAL:
+            if ( self.pointL.y < point.y) and ( point.y < self.pointR.y):
+                return ((self.pointL.x-co.DELTA )< point.x) and ( point.x < (self.pointL.x+co.DELTA ))
+        else: raise Exception("match");
 
 
     def orderPoints(self):
@@ -101,27 +114,20 @@ class Line():
         else: raise Exception("calcR");
 
 
-    def h(self):
+    def h(self)-> 'Line':
         self.calcH()
         return self.h
 
-    def l(self):
+    def l(self)-> 'Line':
         self.calcL()
         return self.l
 
-    def r(self):
+    def r(self)-> 'Line':
         self.calcR()
         return self.r
 
 
-    def __contains__(self, point):
-        if self.orientation == co.HORIZONTAL:
-            if ( self.pointL.x < point.x) and ( point.x < self.pointR.x):
-                return ((self.pointL.y-co.DELTA )< point.y) and ( point.y < (self.pointL.y+co.DELTA ))
-        elif self.orientation == co.VERTICAL:
-            if ( self.pointL.y < point.y) and ( point.y < self.pointR.y):
-                return ((self.pointL.x-co.DELTA )< point.x) and ( point.x < (self.pointL.x+co.DELTA ))
-        else: raise Exception("match");
+
 
 
 
@@ -140,6 +146,8 @@ def isContact(p,l,r):
     return (l==p) or (p==r)
 
 class Scene():
+
+    lineList : list
 
     def __init_(self,viewFrame=None):
         #QtGui.QGraphicsView()
@@ -193,14 +201,14 @@ class Scene():
 
 
 
-    def getItem(self,point):
+    def getItem(self,point: Point)->list:
+        list=[]
         for i in self.lineList :
+            if point in i :
+                list.append(i)
+        return list
 
-
-
-
-
-    def refactoring_(self):
+    def refactoring(self):
 
         tempLineList=[i for i in self.lineList]
         self.lineList=[]
@@ -216,6 +224,12 @@ class Scene():
                 self.lineList.append(line)
 
 
+    def mouseEvent(self,event_ty, pos: Point):
+        if event_ty==co.PRESS:
+            pass
 
 
+
+    def plot(self):
+        pass
 

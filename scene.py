@@ -11,6 +11,8 @@ from ScenePrototype import ScenePrototype,MODE
 
 
 
+
+
 class Scene(ScenePrototype):
     SCENE_IDLE_STATE   = 0
     DRAWING_LINE_STATE = 1

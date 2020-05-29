@@ -5,9 +5,9 @@ from common import *
 
 
 
-class LineF(QtCore.QLineF):
+class LineF(QtCore.QLine):
     def __init__(self, *args, **kwargs):
-        QtCore.QLineF.__init__(self, *args, **kwargs)
+        QtCore.QLine.__init__(self, *args, **kwargs)
 
 
 
@@ -295,10 +295,10 @@ class SceneLinePrototype(QtGui.QGraphicsLineItem,Proto):
         self.rightLine = None
 
     def getLeftPos(self):
-        return self.line().p1()
+        return self.line().p1().toPoint()
 
     def getRightPos(self):
-        return self.line().p2()
+        return self.line().p2().toPoint()
 
     def paint(self, painter, option, widget):
         lineStyle,space =  (SUB_LINE_STYLE,5) if self.isSelected() else (MAIN_LINE_STYLE,0)
